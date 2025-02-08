@@ -1,0 +1,62 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Будеш моєю валентинкою?</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Будеш моєю валентинкою? 💕</h1>
+    <div class="buttons">
+        <button class="yes-btn" onclick="startAnimation('yes')">Так 💖</button>
+        <button class="no-btn" onclick="startAnimation('no');">Ні 😢</button>
+    </div>
+    <div class="image-container" id="image-container">
+        <img id="result-img" src="" width="300" alt="">
+    </div>
+    <script>
+        let animationInterval;
+
+        const yesImages = ["heart1.gif", "heart2.gif", "heart3.gif", "heart4.gif", "heart5.gif"];
+        const noImages = ["tear1.gif", "tear2.gif", "tear3.gif", "tear4.gif", "tear5.gif"];
+
+
+        function startAnimation(answer) {
+            clearInterval(animationInterval);
+            removeFloatingElements();
+            animationInterval = setInterval(() => createFloatingElement(answer), 300);
+            updateImage(answer);
+        }
+
+        function createFloatingElement(type) {
+            const element = document.createElement("img");
+            element.classList.add("floating-element");
+            const imageArray = type === 'yes' ? yesImages : noImages;
+            element.src = imageArray[Math.floor(Math.random() * imageArray.length)];
+            element.style.left = Math.random() * 100 + "vw";
+            element.style.animationDuration = Math.random() * 3 + 6 + "s";
+            document.body.appendChild(element);
+            setTimeout(() => element.remove(), 4000);
+        }
+
+        function removeFloatingElements() {
+            document.querySelectorAll(".heart, .tear").forEach(el => el.remove());
+        }
+
+        function updateImage(answer) {
+            const img = document.getElementById("result-img");
+            const container = document.getElementById("image-container");
+            if (answer === "yes") {
+                img.src = "respond_yes.gif";
+            } else {
+                img.src = "respond_no.gif";
+            }
+            container.style.display = "block";
+        }
+
+       
+    </script>
+</body>
+</html>
